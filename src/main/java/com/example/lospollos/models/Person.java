@@ -1,5 +1,7 @@
 package com.example.lospollos.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,10 @@ public class Person {
 
     @OneToMany
     private List<Car> cars = new ArrayList<>();
+
+    // One to many bidirectionele relatie
+    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Lab> labs = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "person_id", referencedColumnName = "id")

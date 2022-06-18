@@ -14,6 +14,8 @@ public class Lab {
     private String type;
     private String location;
 
+    @ManyToOne
+    @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person owner;
 
     public long getId() {

@@ -15,7 +15,8 @@ public class House {
     private String name;
     private String town;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "house_id", referencedColumnName = "id")
     private List<Person> inhabitants = new ArrayList<>();
 
     public long getId() {

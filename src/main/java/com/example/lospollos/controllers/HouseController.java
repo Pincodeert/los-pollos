@@ -2,6 +2,7 @@ package com.example.lospollos.controllers;
 
 import com.example.lospollos.dtos.HouseRequestDto;
 import com.example.lospollos.models.House;
+import com.example.lospollos.models.Person;
 import com.example.lospollos.services.HouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +44,15 @@ public class HouseController {
         return ResponseEntity.created(location).build();
     }
 
+    @GetMapping("/houses/{id}/persons")
+    public ResponseEntity<Object> getPersonsInHouse(@PathVariable ("id") long id){
+        return ResponseEntity.ok(houseService.getPersonsInHouse(id));
+    }
 
-
+    @PostMapping("/houses/{id}/persons")
+    public ResponseEntity<Object> addPersonInHouse(@PathVariable long id, @RequestBody Person person){
+        houseService.addPersonInHouse(id, person);
+        return ResponseEntity.created(null).build();
+    }
 
 }

@@ -13,7 +13,7 @@ VALUES
 
 INSERT INTO cars (brand, type)
 VALUES
-('Fleetwoud', 'Bounder RV'),
+('Fleetwood', 'Bounder RV'),
 ('Pontiac', 'Aztek'),
 ('Chevrolet', 'Monte Carlo'),
 ('Toyota', 'Tercel'),
@@ -32,4 +32,12 @@ VALUES
 INSERT INTO houses(name, town)
 VALUES
 ('White Residence', 'Albuquerque'),
-('Schrader Residence', 'Albuquerque');
+('Schrader Residence', 'Albuquerque'),
+('Pinkman Residence', 'Albuquerque');
+
+INSERT INTO labs(name, type, location)
+VALUES
+('RV', 'mobile lab', 'desert'),
+('Tented house', 'domestic', 'residential area'),
+('The SuperLab','professional lab','underground'),
+('Mexicano', 'mexican lab', 'Mexico');

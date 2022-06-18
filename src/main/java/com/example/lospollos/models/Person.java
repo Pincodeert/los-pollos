@@ -19,6 +19,10 @@ public class Person {
     @OneToMany
     private List<Car> cars = new ArrayList<>();
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "person_id", referencedColumnName = "id")
+    private List<Person> friends = new ArrayList<>();
+
 
     //geen constructor nodig voor Spring boot
 
@@ -63,5 +67,15 @@ public class Person {
 
     public void setCars(List<Car> cars) {
         this.cars = cars;
+    }
+
+    // in dit geval is het beter om een many-to-many relatie te maken in plaats van een list van persons. (vriend
+    // relaties zijn vaak many-to-many??)
+    public List<Person> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<Person> friends) {
+        this.friends = friends;
     }
 }

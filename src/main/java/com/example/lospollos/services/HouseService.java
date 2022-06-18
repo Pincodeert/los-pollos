@@ -3,20 +3,25 @@ package com.example.lospollos.services;
 import com.example.lospollos.dtos.HouseRequestDto;
 import com.example.lospollos.exceptions.RecordNotFoundException;
 import com.example.lospollos.models.House;
+import com.example.lospollos.models.Person;
 import com.example.lospollos.repositories.HouseRepository;
+import com.example.lospollos.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class HouseService {
 
     HouseRepository houseRepository;
+    PersonRepository personRepository;
 
     @Autowired
-    public HouseService(HouseRepository houseRepository){
+    public HouseService(HouseRepository houseRepository, PersonRepository personRepository){
         this.houseRepository = houseRepository;
+        this.personRepository = personRepository;
     }
 
     public Iterable<House> getAllHouses(){
@@ -52,5 +57,28 @@ public class HouseService {
         House newHouse = houseRepository.save(house);
         long newId = newHouse.getId();
         return newId;
+    }
+
+    public Iterable<Person> getPersonsInHouse(long id){
+        Optional<House> optionalHouse = houseRepository.findById(id);
+        if(optionalHouse.isPresent()){
+            House house = optionalHouse.get();
+            return house.getInhabitants();
+        } else {
+            throw new RecordNotFoundException("This ID does not exist");
+        }
+    }
+
+    public void addPersonInHouse(long id, Person person){
+        Optional<House> optionalHouse = houseRepository.findById(id);
+        if(optionalHouse.isPresent()){
+            House house = optionalHouse.get();
+            List<Person> inhabitants = house.getInhabitants();
+            personRepository.save(person);
+            inhabitants.add(person);
+            houseRepository.save(house);
+        } else {
+            throw new RecordNotFoundException("This ID does not exist");
+        }
     }
 }
